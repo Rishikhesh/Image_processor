@@ -1,24 +1,10 @@
 from PIL import Image
-im = Image.open(r"E:\semester\sem 3\ADS\pacakge\original_image.png")
 
-pix_val=[]
+with open("op_pixel.txt") as file2:
+    pix_val = [int(i) for i in file2]
 
-file2 = open(r"E:\semester\sem 3\ADS\pacakge\op_pixel.txt","r")
-for i in file2:
-    pix_val.append(int(i))
-
-    
-width, height = im.size
-
-pix_val = [pix_val[i * width:(i + 1) * width] for i in range(height)]
-
-pixels_out = []
-
-for row in pix_val:
-    for tup in row:
-        pixels_out.append(tup)
-        
-image_out = Image.new(im.mode,im.size)
-image_out.putdata(pixels_out)
-
-image_out.save(r"E:\semester\sem 3\ADS\pacakge\edited_image.png")
+# the C++ program always writes a 256x256 greyscale image, row by row
+image_out = Image.new("L", (256, 256))
+image_out.putdata(pix_val)
+image_out.save("edited_image.png")
+print("saved edited_image.png")
